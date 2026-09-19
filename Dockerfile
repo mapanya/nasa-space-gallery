@@ -13,6 +13,9 @@ COPY requirements.txt requirements-dev.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+# Make sure the ordinary user below can read the application files,
+# whatever permissions they had on the computer that built the image.
+RUN chmod -R a+rX /app
 
 # Run as an ordinary user instead of the all-powerful root user.
 RUN useradd --create-home appuser
