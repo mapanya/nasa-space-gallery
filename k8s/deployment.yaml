@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nasa-space-gallery
+  labels:
+    app: nasa-space-gallery
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: nasa-space-gallery
+
+  template:
+    metadata:
+      labels:
+        app: nasa-space-gallery
+
+    spec:
+      containers:
+        - name: nasa-space-gallery
+          image: nasa-space-gallery:1.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 5001
+
+          env:
+            # Reads your key from a Kubernetes secret if you created one.
+            # Without the secret the app falls back to NASA's DEMO_KEY.
+            - name: NASA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nasa-api
+                  key: NASA_API_KEY
+                  optional: true
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 10
+            periodSeconds: 20
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi

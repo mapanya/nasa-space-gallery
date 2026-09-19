@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Picture of the Day - NASA Space Gallery{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <h1>Astronomy Picture of the Day</h1>
+    <p>Each day NASA features a different image of our universe. Pick any date to look back in time.</p>
+
+    <form class="controls" method="get" action="{{ url_for('picture_of_the_day') }}">
+        <label for="date">Choose a date</label>
+        <input type="date" id="date" name="date"
+               value="{{ chosen_date }}" min="{{ first_date }}" max="{{ today }}">
+        <button type="submit">Show picture</button>
+    </form>
+</section>
+
+{% if picture %}
+<article class="feature">
+    {% if picture.media_type == "image" %}
+    <a href="{{ picture.hd_url }}" target="_blank" rel="noopener">
+        <img src="{{ picture.url }}" alt="{{ picture.title }}">
+    </a>
+    {% else %}
+    <p class="notice">
+        Today's feature is a video.
+        <a href="{{ picture.url }}" target="_blank" rel="noopener">Watch it on NASA's site</a>.
+    </p>
+    {% endif %}
+
+    <div class="feature-text">
+        <h2>{{ picture.title }}</h2>
+        <p class="meta">{{ picture.date }} | Credit: {{ picture.credit }}</p>
+        <p>{{ picture.explanation }}</p>
+    </div>
+</article>
+{% endif %}
+{% endblock %}

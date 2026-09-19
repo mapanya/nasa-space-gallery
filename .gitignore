@@ -1,0 +1,15 @@
+# Private settings - never upload
+.env
+.env.backup
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Mac and editors
+.DS_Store
+.vscode/
+.idea/

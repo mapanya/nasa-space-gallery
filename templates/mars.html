@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Mars Rovers - NASA Space Gallery{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <h1>Mars Rover Photos</h1>
+    <p>Browse photos from NASA's rovers on the surface of Mars.</p>
+
+    <form class="controls" method="get" action="{{ url_for('mars_photos') }}">
+        <label for="rover">Choose a rover</label>
+        <select id="rover" name="rover">
+            {% for name in rovers %}
+            <option value="{{ name }}" {% if name == rover %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Show photos</button>
+    </form>
+</section>
+
+{% if photos %}
+<section class="grid">
+    {% for photo in photos %}
+    <figure class="card">
+        <a href="{{ photo.image_url }}" target="_blank" rel="noopener">
+            <img src="{{ photo.image_url }}" alt="{{ photo.title }}" loading="lazy">
+        </a>
+        <figcaption>
+            <h3>{{ photo.title }}</h3>
+            <p class="meta">{{ photo.date }}</p>
+        </figcaption>
+    </figure>
+    {% endfor %}
+</section>
+{% elif not error %}
+<p class="notice">No photos were found for {{ rover }}. Try another rover.</p>
+{% endif %}
+{% endblock %}

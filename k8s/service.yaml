@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: nasa-space-gallery-service
+
+spec:
+  type: NodePort
+
+  selector:
+    app: nasa-space-gallery
+
+  ports:
+    - port: 5001
+      targetPort: 5001
+      nodePort: 30080

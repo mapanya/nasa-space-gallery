@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NASA Space Gallery{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="logo" href="{{ url_for('picture_of_the_day') }}">NASA Space Gallery</a>
+        <nav>
+            <a href="{{ url_for('picture_of_the_day') }}"
+               class="{% if request.endpoint == 'picture_of_the_day' %}active{% endif %}">Picture of the Day</a>
+            <a href="{{ url_for('mars_photos') }}"
+               class="{% if request.endpoint == 'mars_photos' %}active{% endif %}">Mars Rovers</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% if error %}
+        <p class="alert" role="alert">{{ error }}</p>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        Images and data courtesy of NASA Open APIs.
+    </footer>
+</body>
+</html>
