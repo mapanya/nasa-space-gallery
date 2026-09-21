@@ -21,6 +21,7 @@ nasa-space-gallery/
 |-- templates/             HTML pages (base, apod, mars)
 |-- static/style.css       Look and feel
 |-- tests/                 Automated tests
+|-- docs/                  Screenshots and architecture diagram
 |-- Dockerfile             How to package the app as a container
 |-- Jenkinsfile            Pipeline: checkout, build, test, deploy
 |-- jenkins/Dockerfile     Jenkins image with the Docker command added
